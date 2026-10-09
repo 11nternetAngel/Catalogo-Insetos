@@ -1,0 +1,55 @@
+<div class="wrapper">
+<div class="container" [class.boxFavorito]="ehFavorito()">
+
+    <div class="fotos">
+        @for (foto of getInsetoAtual().fotos; track foto) {
+            <img [src]="foto" [alt]="getInsetoAtual().nome" [class.ativa]="$index === fotoAtual()">
+        }
+
+        <button class="coracao" (click)="toggleFavorito()">
+            {{ ehFavorito() ? "♥" : "♡" }}
+        </button>
+
+        <div class="pontos">
+            @for (foto of getInsetoAtual().fotos; track foto) {
+                <span [class.pontoAtivo]="$index === fotoAtual()"></span>
+            }
+        </div>
+    </div>
+
+    <div class="corpo">
+        <h3>{{ getInsetoAtual().nome }}</h3>
+        <p class="cientifico">{{ getInsetoAtual().nomeCientifico }}</p>
+
+        <p class="curiosidade">{{ getInsetoAtual().curiosidade }}</p>
+    </div>
+
+    <div class="rodape">
+        <button class="botaoInfo" (click)="toggleInfo()">
+            {{ mostrarInfo() ? "Menos informações" : "Mais informações" }}
+        </button>
+
+        <div class="navegacao">
+            <button (click)="anterior()">&lt;</button>
+            <span>{{ insetoAtual() + 1 }} / {{ insetos.length }}</span>
+            <button (click)="proximo()">&gt;</button>
+        </div>
+
+        <p class="total">♥ Favoritos: {{ totalFavoritos() }}</p>
+    </div>
+</div>
+
+@if (mostrarInfo()) {
+    <aside class="painelInfo">
+        <h4>Sobre {{ getInsetoAtual().nome }}</h4>
+        <dl>
+            <dt>Habitat</dt>
+            <dd>{{ getInsetoAtual().habitat }}</dd>
+            <dt>Alimentação</dt>
+            <dd>{{ getInsetoAtual().alimentacao }}</dd>
+            <dt>Tamanho</dt>
+            <dd>{{ getInsetoAtual().tamanho }}</dd>
+        </dl>
+    </aside>
+}
+</div>
